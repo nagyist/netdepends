@@ -38,16 +38,13 @@ namespace NetDepends
             ModuleDefinition module = ModuleDefinition.ReadModule(assembly);
             foreach (TypeDefinition type in module.Types)
             {
-                if (type.IsValueType)
-                    continue;
-
                 if (type.FullName.Contains("`"))
                     continue;
 
                 if (type.FullName.Contains("<"))
                     continue;
 
-                if (!type.IsClass)
+                if (!type.IsClass && !type.IsInterface)
                     continue;
 
                 this.Add(type);

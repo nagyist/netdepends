@@ -28,8 +28,22 @@ namespace NetDepends
             foreach (var field in type.Fields)
                 this.Add(field.FieldType);
 
+            foreach (var inter in type.Interfaces)
+                this.Add(inter);
+
+            foreach (var even in type.Events)
+                this.Add(even.EventType);
+
+            foreach (var prop in type.Properties)
+                this.Add(prop.PropertyType);
+
+            foreach (var attr in type.CustomAttributes)
+                this.Add(attr.Constructor.DeclaringType);
+
             foreach (var method in type.Methods)
             {
+                foreach (var p in method.CustomAttributes)
+                    this.Add(p.Constructor.DeclaringType);
                 foreach (var p in method.Parameters)
                     this.Add(p.ParameterType);
                 this.Add(method.ReturnType);
@@ -38,6 +52,29 @@ namespace NetDepends
 
                 foreach (var local in method.Body.Variables)
                     this.Add(local.VariableType);
+
+                foreach (var instruction in method.Body.Instructions)
+                {
+                    var methodReference = instruction.Operand as MethodReference;
+                    if (methodReference != null)
+                    {
+                        this.Add(methodReference.DeclaringType);
+                        this.Add(methodReference.ReturnType);
+                    }
+
+                    var field = instruction.Operand as FieldDefinition;
+                    if (field != null)
+                    {
+                        this.Add(field.DeclaringType);
+                    }
+
+                    var property = instruction.Operand as PropertyDefinition;
+                    if (property != null)
+                    {
+                        this.Add(property.DeclaringType);
+                        this.Add(property.PropertyType);
+                    }
+                }
             }
         }
 
