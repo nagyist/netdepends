@@ -8,7 +8,7 @@ namespace NetDepends
         [DataMember]
         System.Collections.ArrayList children;
 
-        public Branch(string name, Dependency parent)
+        public Branch(string name, Branch parent)
             : base(name, parent)
         {
             this.children = new System.Collections.ArrayList();

@@ -8,9 +8,9 @@ namespace NetDepends
         [DataMember]
         string name;
 
-        Dependency parent;
+        Branch parent;
 
-        public Dependency(string name, Dependency parent)
+        public Dependency(string name, Branch parent)
         {
             this.name = name;
             this.parent = parent;
