@@ -1,3 +1,6 @@
 /*/obj
 /*/bin
 *.suo
+/Example/doxygen
+/Example/doxygen_warn.txt
+/Example/Dot/architecture*.*
